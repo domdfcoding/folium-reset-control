@@ -25,6 +25,7 @@ def test_control(advanced_file_regression: AdvancedFileRegressionFixture):
 			)
 	advanced_file_regression.check(html, extension=".html")
 
+
 def test_pos_only(advanced_file_regression: AdvancedFileRegressionFixture):
 	set_branca_random_seed("ZOOM")
 
@@ -39,6 +40,7 @@ def test_pos_only(advanced_file_regression: AdvancedFileRegressionFixture):
 			html,
 			)
 	advanced_file_regression.check(html, extension=".html")
+
 
 def test_zoom_only(advanced_file_regression: AdvancedFileRegressionFixture):
 	set_branca_random_seed("ZOOM")
