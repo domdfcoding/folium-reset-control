@@ -96,12 +96,16 @@ const ResetViewControl = L.Control.extend({
 	},
 
 	onClick(_e) {
-		if (this.options.centre) {
+		if (this.options.bounds) {
+			this._map.fitBounds(this.options.bounds, { maxZoom: this.options.zoom });
+		} else if (this.options.centre) {
 			this._map.setView(this.options.centre, this.options.zoom);
 		} else if (this.options.zoom) {
 			this._map.setZoom(this.options.zoom);
 		} else {
-			console.warn('Neither map centre nor zoom level specified for ResetViewControl, which is likely a mistake');
+			console.warn(
+				'Neither map centre, map bounds or zoom level specified for ResetViewControl, which is likely a mistake',
+			);
 		}
 	},
 

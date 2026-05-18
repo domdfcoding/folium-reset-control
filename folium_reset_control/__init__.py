@@ -47,6 +47,7 @@ class ResetViewControl(folium.elements.JSCSSMixin, folium.elements.MacroElement)
 	:param centre: Latitude and longiture of the map centre to reset to.
 	:param zoom: Zoom level to reset to.
 	:param icon: The control's icon.
+	:param bounds: The bounding box (top left and bottom right corners) to display. Overrides centre and zoom options.
 	:param \*\*kwargs: Additional options for the javascript ``ResetViewControl`` class.
 	"""
 
@@ -55,11 +56,12 @@ class ResetViewControl(folium.elements.JSCSSMixin, folium.elements.MacroElement)
 			centre: tuple[float, float] | None = None,
 			zoom: int | None = None,
 			icon: str = "fa-solid fa-arrow-rotate-left",
+			bounds: tuple[tuple[float, float], tuple[float, float]] | None = None,
 			**kwargs,
 			):
 		super().__init__()
 		self._name = "ResetViewControl"
-		self.options = remove_empty(centre=centre, zoom=zoom, icon=icon, **kwargs)
+		self.options = remove_empty(centre=centre, zoom=zoom, icon=icon, bounds=bounds, **kwargs)
 
 	default_js = [
 			(
