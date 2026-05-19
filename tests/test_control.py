@@ -72,3 +72,19 @@ def test_bounds(advanced_file_regression: AdvancedFileRegressionFixture):
 			html,
 			)
 	advanced_file_regression.check(html, extension=".html")
+
+
+def test_from_map(advanced_file_regression: AdvancedFileRegressionFixture):
+	set_branca_random_seed("ZOOM")
+
+	m = Map(location=(45.5236, -122.6750), zoom_start=7)
+	ResetViewControl.from_map(m).add_to(m)
+
+	root = m.get_root()
+	html = root.render()
+	html = re.sub(
+			"folium-reset-control@v.*/reset_control",
+			"folium-reset-control@latest/reset_control",
+			html,
+			)
+	advanced_file_regression.check(html, extension=".html")
