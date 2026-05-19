@@ -26,10 +26,18 @@ Folium plugin that adds a control for resetting the map view.
 #  OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
+# stdlib
+from typing import TYPE_CHECKING, cast
+
 # 3rd party
+import folium
 import folium.elements
 from folium.template import Template
 from folium.utilities import remove_empty
+
+if TYPE_CHECKING:
+	# 3rd party
+	from typing_extensions import Self
 
 __all__ = ["ResetViewControl"]
 
@@ -62,6 +70,29 @@ class ResetViewControl(folium.elements.JSCSSMixin, folium.elements.MacroElement)
 		super().__init__()
 		self._name = "ResetViewControl"
 		self.options = remove_empty(centre=centre, zoom=zoom, icon=icon, bounds=bounds, **kwargs)
+
+	@classmethod
+	def from_map(
+			cls: type["Self"],
+			map: folium.Map,  # noqa: A002  # pylint: disable=redefined-builtin
+			icon: str = "fa-solid fa-arrow-rotate-left",
+			**kwargs,
+			) -> "Self":
+		r"""
+		Set the centre and zoom from the given folium :class:`~folium.Map` object.
+
+		:param map:
+		:param icon: The control's icon.
+		:param \*\*kwargs: Additional options for the javascript ``ResetViewControl`` class.
+		"""
+
+		return cls(
+				centre=map.location,  # type: ignore[arg-type]
+				zoom=cast(int | None, map.options["zoom"]),
+				icon=icon,
+				bounds=None,
+				**kwargs,
+				)
 
 	default_js = [
 			(
